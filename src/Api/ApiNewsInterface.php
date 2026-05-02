@@ -4,5 +4,5 @@ namespace App\Api;
 
 interface ApiNewsInterface
 {
-    public function fetchLatest($url_path): array;
+    public function fetchLatest($city_id, $url_path): array;
 }

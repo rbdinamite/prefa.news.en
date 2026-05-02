@@ -26,7 +26,7 @@ class NewsFetchService
         foreach ($cities as $city) {
             $this->logger->info('Fetching news from [' . $city['city_name'] . '] - Type [' . $city['url_type'] . '] ...');
             if ($city['url_type'] == 'IPM') {
-                $raw = $this->clientIPM->fetchLatest($city['url_path']);
+                $raw = $this->clientIPM->fetchLatest($city['city_id'], $city['url_path']);
             } else {
                 $this->logger->error('Unknown URL type!');
                 continue;

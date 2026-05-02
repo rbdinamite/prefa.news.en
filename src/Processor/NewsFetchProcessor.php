@@ -117,7 +117,7 @@ class NewsFetchProcessor
         $this->TEXTVALUATION_INDEXES['RAKE_SCORE']['value'] = array_sum($final_array);
         
         // NUMBER OF RECORDS CALCULATED IN THE ORIGINAL RAKE FUNCTION
-        $this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_ORIGINAL']['value'] = count($rake->getKeywordScores());        
+        $this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_ORIGINAL']['value'] = count($rake->getKeywordScores());
 
         // NUMBER OS WORDS USER AFTER THE FILTER
         $this->TEXTVALUATION_INDEXES['RAKE_QT_TOKENS']['value'] = count($rake->getTokens());        
@@ -137,7 +137,7 @@ class NewsFetchProcessor
         $this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_FILTER']['value'] = count($final_array);
 
         // SUCCESS INDEX. CALCULATES THE PERCENTENGE OF THE RAKE FUNCTION CONSIDERED POSITIVE
-        $this->TEXTVALUATION_INDEXES['RAKE_SCORE_SUCCESS']['value'] = ($this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_FILTER']['value'] / $this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_ORIGINAL']['value']);        
+        $this->TEXTVALUATION_INDEXES['RAKE_SCORE_SUCCESS']['value'] = $this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_ORIGINAL']['value'] > 0 ? ($this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_FILTER']['value'] / $this->TEXTVALUATION_INDEXES['RAKE_QT_SCORE_ORIGINAL']['value']) : 0;
 
         // RESULT FROM THE FREQUENCY DISTRIBUTION FUNCTION. SUMS THE NUMBER OF EXCESS TOKENS
         $this->TEXTVALUATION_INDEXES['FREQDIST_SCORE']['value'] = $this->checkFreqDist($tokenDoc->toArray());

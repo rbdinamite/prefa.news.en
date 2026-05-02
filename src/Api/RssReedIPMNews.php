@@ -3,15 +3,17 @@
 namespace App\Api;
 
 use SimplePie\SimplePie;
+use App\Repository\NewsRepository;
 use App\Logger\Logger;
 
 class RssReedIPMNews implements ApiNewsInterface
 {
     public function __construct(
-        private Logger $logger
+        private Logger $logger,
+        private NewsRepository $repository
     ) {}
 
-    public function fetchLatest($url_path): array
+    public function fetchLatest($city_id, $url_path): array
     {
         // INICIALIZES THE LIBRARY  RESPONSIBLE FOR THE QUERY
         $feed = new SimplePie();
@@ -28,16 +30,16 @@ class RssReedIPMNews implements ApiNewsInterface
             if ($check_latest_date) {
                 $news_date = new \Datetime($item->get_date('Y-m-d'));
                 $interval = $news_date->diff(new \Datetime("now"));
-                //news_log('Data noticia mais recente: [' . $item->get_date('Y-m-d') . '] [' . $interval->format('%R%a dias') . ']');
+                $this->logger->info('Latest news date: [' . $item->get_date('Y-m-d') . '] [' . $interval->format('%R%a dias') . ']');
+                $this->repository->updateLastCheck($city_id, date('Y-m-d'), $item->get_date('Y-m-d'));
                 if ($interval->format('%a') > 15) {
                     $this->logger->warning('No recent news (15 days) found. Ignoring city...');
                     break;
-                }
-                //updateCheckDate($sqlite, $city->id, $item->get_date('Y-m-d'));
+                }                
                 $check_latest_date = False;
             }
 
-            $this->logger->info('New article: [' . $item->get_date('Y-m-d') . '] [' . $item->get_title() .']');
+            $this->logger->info('Article: [' . $item->get_date('Y-m-d') . '] [' . $item->get_title() .']');
             $items[] = [
                 'title' => $item->get_title(),
                 'date' => $item->get_date('Y-m-d H:i:s'),

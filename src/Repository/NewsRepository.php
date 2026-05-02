@@ -82,4 +82,12 @@ class NewsRepository
 
         return (bool) $stmt->fetchColumn();
     }
+
+    public function updateLastCheck(int $city_id, string $date_lastcheck, string $date_lastnews): bool
+    {
+        $stmt = $this->pdo->prepare('UPDATE city SET date_lastcheck = ?, date_lastnews = ? WHERE city_id = ?');
+        $stmt->execute([$date_lastcheck, $date_lastnews, $city_id]);
+
+        return (bool) $stmt->fetchColumn();
+    }
 }
