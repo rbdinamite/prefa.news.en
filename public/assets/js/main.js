@@ -6,14 +6,25 @@ async function loadMore() {
   loading = true;
   document.getElementById('loader').style.display = 'flex';
 
-  const response = await fetch(`/api/news.php?page=${page}`);
-  const json     = await response.json();
+  try {
+    const response = await fetch(`/api/news.php?page=${page}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-  renderCards(json.data);
+    const json = await response.json();
+    const items = Array.isArray(json?.data) ? json.data : [];
 
-  page++;
-  loading = false;
-  document.getElementById('loader').style.display = 'none';
+    if (items.length > 0) {
+      renderCards(items);
+      page++;
+    } else {
+      observer.disconnect();
+    }
+  } catch (e) {
+    console.error('Failed to load more news:', e);
+  } finally {
+    loading = false;
+    document.getElementById('loader').style.display = 'none';
+  }
 }
 
 // GET URL NEWS TO OPEN IN NEW TAB
@@ -67,4 +78,4 @@ const observer = new IntersectionObserver(
   { rootMargin: '200px' }
 );
 
-observer.observe(document.getElementById('loader'));
+observer.observe(document.getElementById('infinite-sentinel'));

@@ -98,6 +98,7 @@
   </div>
 
   <div id="infinite-zone"></div>
+  <div id="infinite-sentinel" aria-hidden="true"></div>
   <div class="pn-loader" id="loader">
     <div class="pn-spinner"></div> Loading more news...
   </div>
