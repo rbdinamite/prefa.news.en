@@ -79,3 +79,6 @@ const observer = new IntersectionObserver(
 );
 
 observer.observe(document.getElementById('infinite-sentinel'));
+
+// IIFE build keeps top-level functions local; expose for HTML onclick handlers.
+window.openNews = openNews;

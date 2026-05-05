@@ -5,3 +5,8 @@ composer.lock
 database/news.db
 /storage/logs/
 /storage/cache/
+
+# Frontend build output (run: npm ci && npm run build)
+/node_modules/
+/public/build/
+/scripts/

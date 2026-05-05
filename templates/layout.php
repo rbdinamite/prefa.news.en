@@ -1,10 +1,15 @@
+<?php
+$assetBase = (($config['app']['env'] ?? '') === 'production')
+  ? '/build/assets'
+  : '/assets';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prefa News</title>
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="<?= htmlspecialchars($assetBase) ?>/css/main.css">
 </head>
 <body>
 
@@ -105,6 +110,6 @@
 
 </main>
 
-<script src="/assets/js/main.js"></script>
+<script src="<?= htmlspecialchars($assetBase) ?>/js/main.js"></script>
 </body>
 </html>
