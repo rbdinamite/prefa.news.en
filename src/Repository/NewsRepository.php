@@ -65,20 +65,27 @@ class NewsRepository
         return (bool) $stmt->fetchColumn();
     }
 
+    public function getAllNews(): array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM news');
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     public function insert(array $data): void
     {
         $stmt = $this->pdo->prepare('
-        INSERT INTO news (city_id, news_title, news_title_pt, date_publish, url_news, url_img, news_description, news_score)
-        VALUES (:city_id, :news_title, :news_title_pt, :date_publish, :url_news, :url_img, :news_description, :news_score)
+        INSERT INTO news (city_id, news_title, news_title_pt, date_publish, url_news, url_img, news_description, news_score, is_active)
+        VALUES (:city_id, :news_title, :news_title_pt, :date_publish, :url_news, :url_img, :news_description, :news_score, :is_active)
     ');
 
         $stmt->execute($data);
     }
 
-    public function updateScore(int $city_id, string $news_title, string $publish_date, $news_score): bool
+    public function updateScore(int $news_id, string $news_title, float $news_score): bool
     {
-        $stmt = $this->pdo->prepare('UPDATE news SET news_score = ? WHERE city_id = ? AND news_title_pt = ? AND date_publish = ?');
-        $stmt->execute([$news_score, $city_id, $news_title, $publish_date]);
+        $stmt = $this->pdo->prepare('UPDATE news SET news_score = ?, news_title = ? WHERE news_id = ?');
+        $stmt->execute([$news_score, $news_title, $news_id]);
 
         return (bool) $stmt->fetchColumn();
     }

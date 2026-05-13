@@ -37,10 +37,11 @@ class NewsFetchService
                 continue;
             }
 
-            $normalized = $this->processor->normalizeMany($raw); // @todo: O processor vai traduzir as notícias para ingles.
+            $normalized = $this->processor->normalizeMany($raw);
             
-            foreach ($normalized as $item) {                
+            foreach ($normalized as $item) {
                 if (!$this->repository->checkExists($city['city_id'], $item['title_pt'], $item['date'])) {
+                    $this->logger->info('Inserting news: [' . $item['title_pt'] . ']');
                     $this->repository->insert([
                         'city_id' => $city['city_id'],
                         'news_title' => $item['title'],
@@ -49,12 +50,21 @@ class NewsFetchService
                         'url_news' => $item['link'],
                         'url_img' => $item['img'],
                         'news_description' => $item['description'],
-                        'news_score' => $item['score']
+                        'news_score' => $item['score'],
+                        'is_active' => $item['active']
                     ]);
-                } else {
-                    $this->repository->updateScore($city['city_id'], $item['title_pt'], $item['date'], $item['score']);
                 }
             }
         }
-    }    
+
+        // AFTER PROCESSING ALL NEWS, UPDATE SCORE OF NEWS
+        $this->logger->info('Updating score of news...');
+        $news = $this->repository->getAllNews();        
+        foreach ($news as $n) {
+            $n = $this->processor->calculateScore($n);
+            $this->repository->updateScore($n['news_id'], $n['news_title'], $n['news_score']);
+        }
+        $this->logger->info('Score of news updated!');
+        
+    }
 }

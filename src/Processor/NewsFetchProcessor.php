@@ -31,13 +31,13 @@ class NewsFetchProcessor
 
     // CONTROLS THE VALUE AND WEIGHT OF EACH VARIABLE USED IN THE CALCULATION
     private $TEXTVALUATION_INDEXES = array(
-        'RAKE_SCORE'             => array('index' => 0.15),
+        'RAKE_SCORE'             => array('index' => 0.0005),
         'RAKE_QT_SCORE_ORIGINAL' => array('index' => 0.01),
         'RAKE_QT_TOKENS'         => array('index' => 0.03),
         'RAKE_QT_TOKENS_EXCESS'  => array('index' => -0.3), // NEGATIVE
         'RAKE_QT_SCORE_FILTER'   => array('index' => 0.01),
         'RAKE_SCORE_SUCCESS'     => array('index' => 5),
-        'FREQDIST_SCORE'         => array('index' => -20),         
+        'FREQDIST_SCORE'         => array('index' => -80),        
     );
 
     public function __construct(
@@ -55,19 +55,20 @@ class NewsFetchProcessor
             return null;
         }
 
-        $title = $this->translateTitle($raw['title']);    
-        $this->logger->info('Translated: [' . $title . ']');
-        $score = $this->checkRake($title);
-        $this->logger->info('Score: [' . $score . ']');
+        //$title = $this->translateTitle($raw['title']);    
+        //$this->logger->info('Translated: [' . $title . ']');
+        //$score = $this->checkRake($title);
+        //$this->logger->info('Score: [' . $score . ']');
 
         return [
-            'title'           => $title,
+            'title'           => null,
             'title_pt'        => $raw['title'],
             'date'            => $raw['date']   ?? date('Y-m-d H:i:s'),
             'link'            => $raw['link'],
             'img'             => $raw['img']  ?? null,
             'description'     => $raw['description'] ?? null,
-            'score'           => $this->checkRake($title)
+            'score'           => 0,
+            'active'          => 0
         ];
     }
 
@@ -76,6 +77,17 @@ class NewsFetchProcessor
         $normalized = array_map([$this, 'normalize'], $items);
 
         return array_values(array_filter($normalized));
+    }
+
+    public function calculateScore(array $news): array
+    {
+        if (empty($news['news_title']) || strlen($news['news_title']) == 0) {
+            $news['news_title'] = $this->translateTitle($news['news_title_pt']);
+            $this->logger->info('Translated: [' . $news['news_title'] . ']');
+        }
+        $news['news_score'] = $this->checkRake($news['news_title']);
+        $this->logger->info('Score: [' . $news['news_score'] . ']');
+        return $news;
     }
 
     private function translateTitle(string $title): string
