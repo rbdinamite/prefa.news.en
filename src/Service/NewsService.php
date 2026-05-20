@@ -43,4 +43,9 @@ class NewsService
 
         return $this->repository->findAll(limit: $limit, offset: $offset);
     }
+
+    public function getActiveCityCount(): int
+    {
+        return $this->repository->countActiveCities();
+    }
 }

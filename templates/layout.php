@@ -13,19 +13,8 @@ $assetBase = (($config['app']['env'] ?? '') === 'production')
 </head>
 <body>
 
-<header class="pn-header">
-  <div class="pn-header-inner">
-    <div class="pn-logo">prefa<span class="pn-logo-accent">.news</span>
-      <span class="pn-logo-sub">Santa Catarina</span>
-    </div>
-    <nav class="pn-nav">
-      <a class="active" href="/">Home</a>
-      <a href="/highlights">Highlights</a>
-      <a href="/about">About</a>
-    </nav>
-    <input class="pn-search" type="text" placeholder="Search news...">
-  </div>
-</header>
+<?php $currentPage = 'home'; ?>
+<?php require __DIR__ . '/partials/header.php'; ?>
 
 <div class="pn-breaking" onclick="openNews(<?= (int) $heroNews['news_id'] ?>)">
   <span class="pn-breaking-label">LATEST</span>

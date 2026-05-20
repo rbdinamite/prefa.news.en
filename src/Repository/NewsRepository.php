@@ -20,6 +20,15 @@ class NewsRepository
         return $stmt->fetchAll();
     }
 
+    public function countActiveCities(): int
+    {
+        $stmt = $this->pdo->query(
+            'SELECT COUNT(*) FROM city WHERE is_active = 1'
+        );
+
+        return (int) $stmt->fetchColumn();
+    }
+
     public function findAll(int $limit = 20, int $offset = 0): array
     {
         $stmt = $this->pdo->prepare(

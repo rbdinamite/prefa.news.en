@@ -185,6 +185,111 @@ body {
 }
 
 /* ============================================================
+   About page
+   ============================================================ */
+
+.pn-about {
+    max-width: 720px;
+}
+
+.pn-about-title {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--blue-dark);
+    margin-bottom: 1rem;
+    letter-spacing: -0.3px;
+}
+
+.pn-about-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.pn-about-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue-primary);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.pn-about-stat-number {
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--blue-primary);
+    line-height: 1;
+}
+
+.pn-about-stat-label {
+    font-size: 15px;
+    color: var(--text-secondary);
+}
+
+.pn-about-section {
+    margin-bottom: 2rem;
+}
+
+.pn-about-section h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--blue-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.pn-about-section p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.pn-about-steps {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pn-about-steps li {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.pn-about-steps strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.pn-about-back {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border);
+}
+
+.pn-about-back a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue-primary);
+}
+
+.pn-about-back a:hover {
+    text-decoration: underline;
+}
+
+a.pn-logo {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* ============================================================
    Section title
    ============================================================ */
 
