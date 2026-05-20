@@ -27,78 +27,31 @@ $assetBase = (($config['app']['env'] ?? '') === 'production')
   </div>
 </header>
 
-<div class="pn-breaking">
+<div class="pn-breaking" onclick="openNews(<?= (int) $heroNews['news_id'] ?>)">
   <span class="pn-breaking-label">LATEST</span>
   <span class="pn-breaking-text" id="breaking-ticker">
-    <?= htmlspecialchars($heroNews['news_title']) ?>
+    <?= htmlspecialchars($heroNews['city_name']) ?> - <?= htmlspecialchars($heroNews['news_title']) ?>
   </span>
 </div>
 
 <main class="pn-main">
 
-  <div class="pn-section-title">Top stories</div>
-  <div class="pn-hero">
-
-    <div class="pn-hero-main" onclick="openNews(<?= (int) $heroNews['news_id'] ?>)">
-      <div style="position:relative;">
-        <img src="<?= htmlspecialchars($heroNews['url_img']) ?>"
-             alt="<?= htmlspecialchars($heroNews['news_title']) ?>"
-             class="pn-hero-img">
-        <div class="pn-hero-badge">Exclusive</div>
-      </div>
-      <div class="pn-hero-body">
-        <div class="pn-hero-city">
-          📍 <?= htmlspecialchars($heroNews['city_name']) ?>
-        </div>
-        <div class="pn-hero-title">
-          <?= htmlspecialchars($heroNews['news_title']) ?>
-        </div>
-        <div class="pn-hero-meta">
-          <?= htmlspecialchars($heroNews['date_publish']) ?>
-        </div>
-      </div>
-    </div>
-
-    <div class="pn-sidebar">
-      <?php foreach ($sidebarNews as $item): ?>
-        <div class="pn-sidebar-item" onclick="openNews(<?= (int) $item['news_id'] ?>)">
-          <img src="<?= htmlspecialchars($item['url_img']) ?>"
-               alt="" class="pn-sidebar-thumb">
-          <div class="pn-sidebar-info">
-            <div class="pn-sidebar-city">
-              📍 <?= htmlspecialchars($item['city_name']) ?>
-            </div>
-            <div class="pn-sidebar-title">
-              <?= htmlspecialchars($item['news_title']) ?>
-            </div>
-            <div class="pn-sidebar-time">
-              <?= htmlspecialchars($item['date_publish']) ?>
-            </div>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-
-  </div>
-
   <div class="pn-section-title">Latest news</div>
-  <div class="pn-grid">
+  <div class="pn-grid pn-grid--text">
     <?php foreach ($latestNews as $item): ?>
-      <div class="pn-card" onclick="openNews(<?= (int) $item['news_id'] ?>)">
-        <img src="<?= htmlspecialchars($item['url_img']) ?>"
-             alt="" class="pn-card-thumb">
+      <article class="pn-card pn-card--text" onclick="openNews(<?= (int) $item['news_id'] ?>)">
         <div class="pn-card-body">
           <div class="pn-card-city">
-            📍 <?= htmlspecialchars($item['city_name']) ?>
+            <?= htmlspecialchars($item['city_name']) ?>
           </div>
-          <div class="pn-card-title">
+          <h3 class="pn-card-title">
             <?= htmlspecialchars($item['news_title']) ?>
-          </div>
-          <div class="pn-card-time">
+          </h3>
+          <time class="pn-card-time" datetime="<?= htmlspecialchars($item['date_publish']) ?>">
             <?= htmlspecialchars($item['date_publish']) ?>
-          </div>
+          </time>
         </div>
-      </div>
+      </article>
     <?php endforeach; ?>
   </div>
 

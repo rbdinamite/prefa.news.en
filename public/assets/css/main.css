@@ -268,6 +268,46 @@ body {
     color: var(--text-muted);
 }
 
+/* Text-only layout (blocked remote images) */
+.pn-hero-main--text {
+    border-left: 4px solid var(--blue-primary);
+}
+
+.pn-hero-main--text .pn-hero-body {
+    padding: 1.25rem 1.5rem;
+}
+
+.pn-hero-main--text .pn-hero-badge {
+    position: static;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.pn-hero-main--text .pn-hero-title {
+    font-size: 22px;
+    line-height: 1.35;
+}
+
+.pn-sidebar--text .pn-sidebar-item {
+    padding: 12px 14px;
+}
+
+.pn-sidebar--text .pn-sidebar-title {
+    -webkit-line-clamp: 3;
+}
+
+.pn-card--text {
+    border-top: 3px solid var(--blue-primary);
+}
+
+.pn-card--text .pn-card-body {
+    padding: 14px;
+}
+
+.pn-card--text .pn-card-title {
+    -webkit-line-clamp: 4;
+}
+
 /* ============================================================
    Sidebar
    ============================================================ */
@@ -536,8 +576,8 @@ body {
         display: none;
     }
 
-    .pn-hero-img {
-        height: 200px;
+    .pn-hero-main--text .pn-hero-title {
+        font-size: 18px;
     }
 
     .pn-hero-title {

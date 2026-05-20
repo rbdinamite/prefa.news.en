@@ -56,18 +56,17 @@ async function openNews(id) {
 function renderCards(items) {
     const zone = document.getElementById('infinite-zone');
     const grid  = document.createElement('div');
-    grid.className = 'pn-grid';
+    grid.className = 'pn-grid pn-grid--text';
 
     items.forEach(item => {
         grid.innerHTML += `
-            <div class="pn-card" onclick="openNews(${parseInt(item.news_id)})">
-                <img src="${item.url_img}" alt="" class="pn-card-thumb">
+            <article class="pn-card pn-card--text" onclick="openNews(${parseInt(item.news_id)})">
                 <div class="pn-card-body">
-                    <div class="pn-card-city">📍 ${item.city_name}</div>
-                    <div class="pn-card-title">${item.news_title}</div>
-                    <div class="pn-card-time">${item.date_publish}</div>
+                    <div class="pn-card-city">${item.city_name}</div>
+                    <h3 class="pn-card-title">${item.news_title}</h3>
+                    <time class="pn-card-time">${item.date_publish}</time>
                 </div>
-            </div>`;
+            </article>`;
     });
 
     zone.appendChild(grid);
